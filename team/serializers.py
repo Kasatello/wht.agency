@@ -6,7 +6,9 @@ from user.models import User
 
 class TeamSerializer(serializers.ModelSerializer):
     class TeamSerializer(serializers.ModelSerializer):
-        members = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+        members = serializers.PrimaryKeyRelatedField(
+            queryset=User.objects.all(), many=True
+        )
 
     class Meta:
         model = Team
@@ -20,7 +22,9 @@ class TeamSerializer(serializers.ModelSerializer):
             if instance:
                 teams = teams.exclude(pk=instance.pk)
             if teams.exists():
-                raise serializers.ValidationError("This person is already in another team.")
+                raise serializers.ValidationError(
+                    "This person is already in another team."
+                )
         return members
 
     def get_member_name(self, user_id):
